@@ -1,176 +1,141 @@
 <?php
 
-/**
- * Lecture 6: PHP Core Fundamentals, Advanced Arrays, and Iteration
- * * This file contains the complete practical examples covered in the lecture,
- * including basic variables, constants, loose type checks, complex nested arrays,
- * and data filtering using control loops.
- */
+// --------------- ARRAY FUNCTIONS ---------------
 
-// ============================================================================
-// 1. BASIC SYNTAX & VARIABLES
-// ============================================================================
+// 1. array_push() 
+$fruits = ["apple", "banana"];
+array_push($fruits, "orange", "mango");
+var_dump($fruits);
 
-echo "--- 1. Basic Syntax & Outputs ---\n";
-echo "Hello, World! \n";
+// 2. array_pop() 
+$stack = ["a", "b", "c"];
+$removed = array_pop($stack);
+var_dump($stack, $removed);
 
-// Different comment styles supported by PHP
-// Single-line comment style 1
-# Single-line comment style 2
-/* Multi-line comment block
-*/
+// 3. unset() 
+$colors = ["red", "green", "blue"];
+unset($colors[1]);
+var_dump($colors);
 
-$name = "John Doe"; // String type
-$age = 20;          // Integer type
+// 4. sort() 
+$numbers = [3, 1, 4, 1, 5];
+sort($numbers);
+var_dump($numbers);
 
-// var_dump is an essential tool for debugging variable data types and lengths
-var_dump($name);
-var_dump($age);
+// 5. array_filter() 
+$nums = [1, 2, 3, 4, 5, 6];
+$evens = array_filter($nums, fn($n) => $n % 2 === 0);
+var_dump($evens);
 
-$test = "";      // Empty string
-$test2 = " ";    // String containing a space
-$test3 = null;   // Null value
+// 6. array_shift() 
+$queue = ["first", "second", "third"];
+$first = array_shift($queue);
+var_dump($queue, $first);
 
-// ============================================================================
-// 2. CONSTANTS & COMPARISONS
-// ============================================================================
+// 7. count() 
+$items = ["a", "b", "c", "d"];
+var_dump(count($items));
 
-echo "\n--- 2. Constants & Logic Comparisons ---\n";
+// 8. in_array() 
+$users = ["Alice", "Bob", "Charlie"];
+var_dump(in_array("Bob", $users));
 
-// Compile-time constant definition
-const PASSWORD = "123456";
+// 9. Array spread 
+$a = ["x", "y"];
+$b = ["z", "w"];
+var_dump([...$a, ...$b]);
 
-// Runtime constant definition
-define("DB_NAME", "adisc");
+// 10. array_keys()
+$data = ["a" => 1, "b" => 2, "c" => 3];
+var_dump(array_keys($data));
 
-// Truthy and Falsy evaluations: empty strings evaluate implicitly to false
-$sstr = "";
-if ($sstr) {
-    echo "true \n";
-} else {
-    echo "false \n"; 
-}
 
-// Loose Equality (==) vs Strict Equality (===) concept demonstration
-$x = null;
-if ($x == "") {
-    echo "Loose check: null evaluates as equal to an empty string.\n";
-}
+// --------------- STRING FUNCTIONS ---------------
 
-$y = [];
-echo "Empty array cast to boolean yields: " . (int)(bool)$y . " (false)\n";
+// 11. strlen()
+$name = "ADISC";
+var_dump(strlen($name));
 
-// ============================================================================
-// 3. COMPLEX DATA STRUCTURES (ARRAYS)
-// ============================================================================
+// 12. str_contains()
+$sentence = "The quick brown fox";
+var_dump(str_contains($sentence, "quick"));
 
-echo "\n--- 3. Array Configurations ---\n";
+// 13. str_starts_with()
+var_dump(str_starts_with($sentence, "The"));
 
-// Index-based (zero-indexed) Array
-$courses = ["Math", "Science", "English"];
-echo "First course item: " . $courses[0] . "\n";
+// 14. strtoupper() / strtolower()
+$word = "hello";
+var_dump(strtoupper($word), strtolower($word));
 
-// Associative Array mapping custom keys
-$student = [
-    "name" => "John Doe",
-    "age" => 20,
-    "courses" => ["Math", "Science", "English"]
-];
-echo "Nested item selection: " . $student["courses"][0] . "\n";
+// 15. ucwords()
+$title = "hello world";
+var_dump(ucwords($title));
 
-// Multi-dimensional Array demonstrating deep indexing structures
-$student2 = [
-    "name" => "Jane Doe",
-    "age" => 22,
-    "courses" => [
-        "Math" => [
-            "Algebra",
-            "Geometry"
-        ],
-        "Science" => [
-            "Physics",
-            "Chemistry"
-        ]
-    ]
-];
-echo "Deeply nested multi-array value: " . $student2["courses"]["Math"][0] . "\n";
+// 16. substr() 
+var_dump(substr("hello world", 1, 5));
 
-// Complex multi-dimensional list mapping system entities (Employees)
-$employees = [
-    [
-        "id" => 1,
-        "first_name" => "Crist",
-        "last_name" => "Yaghian",
-        "type" => "Employee",
-        "tasks" => [
-            "type" => "Development",
-            "status" => "In Progress",
-            "notes" => ["note1", "note2", "note3"]
-        ]
-    ],
-    [
-        "id" => 2,
-        "first_name" => "Crist1",
-        "last_name" => "Yaghian1",
-        "type" => "Employee",
-        "tasks" => [
-            "type" => "Development",
-            "status" => "In Progress",
-            "notes" => ["note1", "note2", "note3"]
-        ]
-    ]
-];
+// 17. str_replace() 
+var_dump(str_replace("a", "o", "banana"));
 
-// ============================================================================
-// 4. CONTROL FLOW & DATA ITERATION
-// ============================================================================
+// 18. trim() 
+var_dump(trim("   hello   "));
 
-// Dataset containing students, evaluation criteria scores, and nested task structures
-$students = [
-    [
-        "name" => "John Doe",
-        "mark" => 85,
-        "tasks" => ["task1", "task2"]
-    ],
-    [
-        "name" => "Crist Doe",
-        "mark" => 45,
-        "tasks" => ["task3", "task4"]
-    ],
-    [
-        "name" => "test Doe",
-        "mark" => 55,
-        "tasks" => ["task5", "task6"]
-    ],
-    [
-        "name" => "welcom Doe",
-        "mark" => 95,
-        "tasks" => []
-    ],
-    [
-        "name" => "hi Doe",
-        "mark" => 95,
-        "tasks" => []
-    ],
-    [
-        "name" => "testing Doe",
-        "mark" => 10,
-        "tasks" => []
-    ],
-];
+// 19. strpos() 
+var_dump(strpos("hello", "l"));
 
-echo "\n--- 4a. Filtering Passing Students with Tasks ---\n";
-// Using a foreach loop to cleanly evaluate conditions within a nested array structure
-foreach ($students as $currentStudent) {
-    if ($currentStudent["mark"] >= 60 && count($currentStudent["tasks"]) >= 1) {
-        echo $currentStudent["name"] . " has passed and completed tasks.\n";
-    }
-}
+// 20. implode() 
+var_dump(implode(",", ["apple", "banana", "cherry"]));
 
-echo "\n--- 4b. Flattened Task Report (Nested Loops) ---\n";
-// Iterating over nested arrays using double foreach loops to flatten down records
-foreach ($students as $currentStudent) {
-    foreach ($currentStudent["tasks"] as $task) {
-        echo "Allocated Task: " . $task . "\n";
-    }
-}
+// 21. explode() 
+var_dump(explode(",", "apple,banana,cherry"));
+
+// 22. str_pad() 
+var_dump(str_pad("42", 6, "0", STR_PAD_LEFT));
+
+// 23. str_repeat() 
+var_dump(str_repeat("ha", 5));
+
+// 24. chr() / ord() 
+var_dump(chr(65), ord("A"));
+
+// 25. str_ends_with()
+var_dump(str_ends_with($sentence, "fox"));
+
+
+// --------------- NUMBER FUNCTIONS ---------------
+
+// ceil()
+var_dump(ceil(4.2));
+
+// round()
+var_dump(round(4.5));
+
+// floor()
+var_dump(floor(4.8));
+
+// abs()
+var_dump(abs(-42));
+
+// max() / min()
+var_dump(max(1, 5, 3), min(1, 5, 3));
+
+// pow() 
+var_dump(pow(2, 8));
+
+// sqrt()
+var_dump(sqrt(16));
+
+// intdiv()
+var_dump(intdiv(10, 3));
+
+// is_int() / is_float() 
+var_dump(is_int(5), is_float(5.5));
+
+// is_numeric() 
+var_dump(is_numeric("42"), is_numeric("hello"));
+
+// base_convert() 
+var_dump(base_convert("FF", 16, 2));
+
+// range() 
+var_dump(range(1, 5));
