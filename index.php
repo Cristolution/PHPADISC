@@ -139,3 +139,4 @@ var_dump(base_convert("FF", 16, 2));
 
 // range() 
 var_dump(range(1, 5));
+?>
